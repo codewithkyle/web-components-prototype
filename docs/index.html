@@ -104,28 +104,50 @@
             text-align: right;
         }
 
-        remove-cart-component
+        cart-controls
+        {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 128px;
+        }
+
+        [role=button]
         {
             padding: 0 1rem;
             border-radius: 2px;
-            background-color: cornflowerblue;
+            background-color: hsl(219, 79%, 66%);
             height: 36px;
             line-height: 36px;
             color: #fff;
             font-size: 14px;
             text-transform: uppercase;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 128px;
+            margin: 0 0.5rem;
             cursor: pointer;
+            transition: all 50ms ease;
+        }
+
+        [role=button]:hover
+        {
+            background-color: hsl(219, 79%, 70%);
+        }
+
+        [role=button]:active
+        {
+            background-color: hsl(219, 79%, 62%);
         }
     </style>
 </head>
 <body>
     <script src="assets/cart-component.js" defer="defer"></script>
     <script src="assets/remove-cart-component.js" defer="defer"></script>
+    <script src="assets/line-item-component.js" defer="defer"></script>
+    <script src="assets/add-line-item-component.js" defer="defer"></script>
     <main role="main">
+        <cart-controls>
+            <remove-cart-component role="button" aria-label="Remove cart component">Delete Cart</remove-cart-component>
+            <add-line-item-component role="button" aria-label="Add a line item to the cart">Add Line Item</add-line-item-component>
+        </cart-controls>
         <cart-component>
             <div>
                 <template class="js-line-item-template">
@@ -156,9 +178,6 @@
                 </cart-pricing>
             </div>
         </cart-component>
-        <remove-cart-component role="button" aria-label="Remove cart component">
-            Delete Cart
-        </remove-cart-component>
     </main>
 </body>
 </html>
