@@ -32,6 +32,8 @@ var LineItemComponent = (function (_super) {
     LineItemComponent.prototype.updatePrice = function (qty) {
         var newPrice = qty * parseFloat(this._priceDisplay.dataset.rawPrice);
         this._priceDisplay.innerText = new Intl.NumberFormat(document.documentElement.lang, { style: 'currency', currency: this._priceDisplay.dataset.currency }).format(newPrice);
+        var cart = this.closest('cart-component');
+        cart.recalculateSubtotal();
     };
     LineItemComponent.prototype.getNewQty = function () {
         var newQty = parseInt(this._qytInput.value);

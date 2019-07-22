@@ -14,13 +14,28 @@ var __extends = (this && this.__extends) || (function () {
 var CartComponent = (function (_super) {
     __extends(CartComponent, _super);
     function CartComponent() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        _this._subtotalDisplay = _this.querySelector('.js-subtotal-display');
+        return _this;
     }
     CartComponent.prototype.connectedCallback = function () {
         console.log('Cart Connected');
     };
     CartComponent.prototype.disconnectedCallback = function () {
         console.log('Cart Disconnected');
+    };
+    CartComponent.prototype.recalculateSubtotal = function () {
+        console.log('Someone told me to recalculate');
+        var lineItemTotalEls = Array.from(this.querySelectorAll('line-item-total'));
+        var newSubtotal = 0;
+        for (var i = 0; i < lineItemTotalEls.length; i++) {
+            var cleanString = lineItemTotalEls[i].innerHTML.replace(/\$/g, '');
+            var lineItemPrice = parseFloat(cleanString);
+            if (lineItemPrice !== NaN) {
+                newSubtotal += lineItemPrice;
+            }
+        }
+        this._subtotalDisplay.innerText = new Intl.NumberFormat(document.documentElement.lang, { style: 'currency', currency: 'USD' }).format(newSubtotal);
     };
     return CartComponent;
 }(HTMLElement));
