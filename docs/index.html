@@ -33,7 +33,6 @@
             background-color: transparent;
         }
         body,
-        fuze-page,
         main{
             overflow-x: hidden;
             display: block;
@@ -51,8 +50,101 @@
             font-size: 100%;
         }
     </style>
+
+    <!-- CSS -->
+    <style>
+        body
+        {
+            background-color: #fff;
+        }
+
+        main
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        cart-component
+        {
+            width: 840px;
+            min-height: 256px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 32px;
+        }
+        
+        cart-component cart-pricing{
+            padding: 1rem 2rem;
+            background-color: #f5f4f4;
+            border-radius: 8px;
+            width: 256px;
+        }
+
+        cart-component cart-pricing dl
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        cart-component cart-pricing dl dt,
+        cart-component cart-pricing dl dd
+        {
+            margin: 0.5rem 0;
+        }
+
+        cart-component cart-pricing dl dt
+        {
+            text-align: left;
+            opacity: 0.6;
+        }
+
+        cart-component cart-pricing dl dd
+        {
+            text-align: right;
+        }
+
+        remove-cart-component
+        {
+            padding: 0 1rem;
+            border-radius: 2px;
+            background-color: cornflowerblue;
+            height: 36px;
+            line-height: 36px;
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 128px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    
+    <script src="assets/cart-component.js" defer="defer"></script>
+    <script src="assets/remove-cart-component.js" defer="defer"></script>
+    <main role="main">
+        <cart-component>
+            <div>
+            </div>
+            <div>
+                <cart-pricing>
+                    <dl>
+                        <dt>Tax</dt>
+                        <dd class="js-tax-display">$0</dd>
+                        <dt>Shipping</dt>
+                        <dd class="js-shipping-display">$0</dd>
+                        <dt>Subtotal</dt>
+                        <dd class="js-subtotal-display">$0</dd>
+                    </dl>
+                </cart-pricing>
+            </div>
+        </cart-component>
+        <remove-cart-component role="button" aria-label="Remove cart component">
+            Delete Cart
+        </remove-cart-component>
+    </main>
 </body>
 </html>
