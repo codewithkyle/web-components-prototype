@@ -1,4 +1,4 @@
-class RemoveCartComponent extends HTMLElement
+class RemoveCartComponent extends HTMLButtonElement
 {
     constructor()
     {
