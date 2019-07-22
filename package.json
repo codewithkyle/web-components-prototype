@@ -6,7 +6,7 @@
     "url": ""
   },
   "scripts": {
-    "compile": "tsc",
+    "compile": "tsc --p ./tsconfig-es6.json && tsc --p ./tsconfig-es5.json",
     "preview": "http-server ./docs",
     "test": "npm run compile && npm run preview"
   },
