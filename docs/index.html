@@ -18,7 +18,7 @@
             outline: none;
             position: relative;
         }
-        html, body, div, span, button, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {  
+        html, body, div, span, button, applet, object, input, textarea, select iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup,  menu, nav, output, ruby, section, summary, time, mark, audio, video {  
             position: relative;
             margin: 0;
             padding: 0;  
@@ -32,6 +32,14 @@
             color: inherit;
             background-color: transparent;
         }
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button,
+        input[type=number]{
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+
         body,
         main{
             overflow-x: hidden;
@@ -51,8 +59,15 @@
         }
     </style>
 
-    <!-- CSS -->
+    <!-- Base CSS -->
     <style>
+        :root
+        {
+            --blue: hsl(219, 79%, 66%);
+            --grey: hsl(0, 5%, 96%);
+            --off-black: #181818;
+        }
+
         body
         {
             background-color: #fff;
@@ -65,6 +80,34 @@
             align-items: center;
         }
 
+        [role=button]
+        {
+            padding: 0 1rem;
+            border-radius: 2px;
+            background-color: var(--blue);
+            height: 36px;
+            line-height: 36px;
+            color: #fff;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: all 50ms ease;
+        }
+
+        [role=button]:hover
+        {
+            background-color: hsl(219, 79%, 70%);
+        }
+
+        [role=button]:active
+        {
+            background-color: hsl(219, 79%, 62%);
+        }
+    </style>
+
+    <!-- Cart Component -->
+    <style>
         cart-component
         {
             width: 840px;
@@ -76,7 +119,7 @@
         
         cart-component cart-pricing{
             padding: 1rem 2rem;
-            background-color: #f5f4f4;
+            background-color: var(--grey);
             border-radius: 8px;
             width: 256px;
         }
@@ -111,30 +154,84 @@
             transform: translateX(-50%);
             top: 128px;
         }
+    </style>
 
-        [role=button]
+    <!-- Line Item Component -->
+    <style>
+        line-item-component
         {
-            padding: 0 1rem;
-            border-radius: 2px;
-            background-color: hsl(219, 79%, 66%);
+            border: 2px solid var(--grey);
+            border-radius: 4px;
+            display: block;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        line-item-component line-item-title
+        {
+            font-size: 1.25rem;
+            line-height: 1.618;
+            opacity: 0.87;
+            display: block;
+        }
+
+        line-item-component line-item-subtitle
+        {
+            line-height: 1.618;
+            opacity: 0.6;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        line-item-component qty-input
+        {
+            display: inline-flex;
+            flex-flow: row nowrap;
+        }
+
+        line-item-component qty-input button
+        {
+            border-radius: 50%;
+            background-color: var(--grey);
+            display: inline-flex;
+            width: 36px;
             height: 36px;
-            line-height: 36px;
-            color: #fff;
-            font-size: 14px;
-            text-transform: uppercase;
-            margin: 0 0.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column wrap;
+            color: var(--off-black);
+            font-size: 1.25rem;
+            line-height: 0;
             cursor: pointer;
             transition: all 50ms ease;
         }
 
-        [role=button]:hover
+        line-item-component qty-input button:hover
         {
-            background-color: hsl(219, 79%, 70%);
+            background-color: hsl(0, 5%, 94%);
         }
 
-        [role=button]:active
+        line-item-component qty-input button:active
         {
-            background-color: hsl(219, 79%, 62%);
+            background-color: hsl(0, 5%, 92%);
+        }
+
+        line-item-component qty-input input
+        {
+            margin: 0 0.5rem;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        line-item-component line-item-total
+        {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 2rem;
+            font-size: 1.5rem;
+            color: var(--blue);
         }
     </style>
 </head>
@@ -149,22 +246,20 @@
             <add-line-item-component role="button" aria-label="Add a line item to the cart">Add Line Item</add-line-item-component>
         </cart-controls>
         <cart-component>
-            <div>
+            <cart-line-items>
                 <template class="js-line-item-template">
                     <line-item-component>
                         <line-item-title>Product Title</line-item-title>
                         <line-item-subtitle>Product Subtitle</line-item-subtitle>
                         <qty-input>
                             <button data-direction="-1">-</button>
-                            <input type="number" name="qty" min="0" max="999" step="1">
+                            <input type="number" name="qty" min="0" max="999" step="1" value="1">
                             <button data-direction="1">+</button>
                         </qty-input>
-                        <line-item-total>
-                            $0
-                        </line-item-total>
+                        <line-item-total>$0.00</line-item-total>
                     </line-item-component>
                 </template>
-            </div>
+            </cart-line-items>
             <div>
                 <cart-pricing>
                     <dl>
