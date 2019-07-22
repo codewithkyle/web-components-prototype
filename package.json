@@ -1,0 +1,17 @@
+{
+  "author": "Kyle Andrews",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "compile": "tsc",
+    "preview": "http-server ./docs",
+    "test": "npm run compile && npm run preview"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "typescript": "^3.5.3"
+  }
+}

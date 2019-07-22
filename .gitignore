@@ -1,0 +1,12 @@
+# NPM
+# -------
+node_modules
+
+
+# Other
+# -------
+.sass-cache
+.DS_Store
+.stylelintcache
+_compiled
+.editorconfig
