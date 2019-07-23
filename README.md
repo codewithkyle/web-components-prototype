@@ -20,3 +20,7 @@ The purpose of this prototype is to experiment with what the current (July 2019)
 1. Server the cached site when in offline mode
 1. Experiment with an offline first protocall alongside the ability to reload page with a cache bust when available
 1. Experiment with lazy loading / dynamically importing all scripts and stylesheets
+
+## Postmortem
+
+Intentionally left empty during prototyping / development

@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -11,6 +12,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+Object.defineProperty(exports, "__esModule", { value: true });
+var notifyjs_1 = require("@codewithkyle/notifyjs");
+var animejs_1 = require("animejs");
 var RemoveCartComponent = (function (_super) {
     __extends(RemoveCartComponent, _super);
     function RemoveCartComponent() {
@@ -24,6 +28,8 @@ var RemoveCartComponent = (function (_super) {
     RemoveCartComponent.prototype.removeCartComponent = function () {
         var cart = document.body.querySelector('cart-component');
         cart.remove();
+        new notifyjs_1.Notify({ message: 'Cart was removed successfully' });
+        console.log(animejs_1.default);
     };
     return RemoveCartComponent;
 }(HTMLElement));

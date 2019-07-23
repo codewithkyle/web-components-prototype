@@ -1,3 +1,6 @@
+import { Notify } from '@codewithkyle/notifyjs';
+import anime from 'animejs'
+
 class RemoveCartComponent extends HTMLElement
 {
     constructor()
@@ -16,6 +19,8 @@ class RemoveCartComponent extends HTMLElement
     {
         const cart = document.body.querySelector('cart-component');
         cart.remove();
+        new Notify({ message: 'Cart was removed successfully' });
+        console.log(anime);
     }
 }
 
