@@ -10,3 +10,4 @@ node_modules
 .stylelintcache
 _compiled
 .editorconfig
+_bundles
