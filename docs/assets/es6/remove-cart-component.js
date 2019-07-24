@@ -1,5 +1,5 @@
-// import { Notify } from '@codewithkyle/notifyjs';
-// import anime from 'animejs';
+import { Notify } from '@codewithkyle/notifyjs';
+import anime from 'animejs';
 class RemoveCartComponent extends HTMLElement {
     constructor() {
         super();

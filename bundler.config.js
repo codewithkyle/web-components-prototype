@@ -150,7 +150,17 @@ function buildPackages(files)
 
                         /** File contents for the pre-bundled bundles */
                         let data = requireStatements[k];
-                        data += `\nwindow.${ importName } = ${ importName };`;
+
+                        /** Will be imported as an object */
+                        if(requireStatements[k].match(/(\*\sas)/))
+                        {
+                            data += `\nwindow.${ importName } = ${ importName }.default;`;
+                        }
+                        else
+                        {
+                            /** Bundled as a function */
+                            data += `\nwindow.${ importName } = ${ importName };`;
+                        }
 
                         fs.writeFile(`./_bundles/${ filename }.js`, data, (err)=>{
                             if(err)
