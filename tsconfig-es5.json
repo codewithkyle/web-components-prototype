@@ -9,6 +9,8 @@
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
+        "baseUrl": "./docs",
+        "esModuleInterop": true,
         "lib": [
             "dom",
             "scripthost",

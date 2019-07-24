@@ -94,6 +94,6 @@
 
 	var v4_1 = v4;
 
-	window.v4 = v4_1;
+	window.uuid = v4_1;
 
 }());

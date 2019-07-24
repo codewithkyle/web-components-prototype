@@ -1,3 +1,5 @@
+import uuid from 'uuid/v4';
+
 class CartComponent extends HTMLElement
 {
 
@@ -7,6 +9,9 @@ class CartComponent extends HTMLElement
     {
         super();
         this._subtotalDisplay = this.querySelector('.js-subtotal-display');
+        const uid = uuid();
+        this.dataset.uid = uid;
+        console.log(uid);
     }
 
     connectedCallback() : void

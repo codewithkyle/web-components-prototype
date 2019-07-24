@@ -9,6 +9,8 @@
         "target": "es6",
         "module": "esnext",
         "moduleResolution": "node",
+        "baseUrl": "./docs",
+        "esModuleInterop": true,
         "lib": [
             "dom",
             "scripthost",

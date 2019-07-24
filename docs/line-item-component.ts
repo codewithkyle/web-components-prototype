@@ -30,6 +30,7 @@ class LineItemComponent extends HTMLElement
     {
         const newPrice = qty * parseFloat(this._priceDisplay.dataset.rawPrice);
         this._priceDisplay.innerText = new Intl.NumberFormat(document.documentElement.lang, { style: 'currency', currency: this._priceDisplay.dataset.currency }).format(newPrice);
+        // @ts-ignore
         const cart = <CartComponent>this.closest('cart-component');
         cart.recalculateSubtotal();
     }
