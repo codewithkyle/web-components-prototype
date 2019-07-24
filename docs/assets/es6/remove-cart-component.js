@@ -1,5 +1,3 @@
-
-
 class RemoveCartComponent extends HTMLElement {
     constructor() {
         super();
@@ -11,8 +9,6 @@ class RemoveCartComponent extends HTMLElement {
     removeCartComponent() {
         const cart = document.body.querySelector('cart-component');
         cart.remove();
-        new Notify({ message: 'Cart was removed successfully' });
-        console.log(anime);
     }
 }
 customElements.define('remove-cart-component', RemoveCartComponent);

@@ -29,8 +29,17 @@
     "uuid": "^3.3.2"
   },
   "webDependencies": [
-    "uuid/v4",
-    "animejs",
-    "@codewithkyle/notifyjs"
+    {
+      "package": "uuid/v4",
+      "import": "* as uuid"
+    },
+    {
+      "package": "animejs",
+      "import": "anime"
+    },
+    {
+      "package": "@codewithkyle/notifyjs",
+      "import": "{ Notify }"
+    }
   ]
 }

@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -12,19 +11,11 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var v4_1 = __importDefault(require("uuid/v4"));
 var CartComponent = (function (_super) {
     __extends(CartComponent, _super);
     function CartComponent() {
         var _this = _super.call(this) || this;
         _this._subtotalDisplay = _this.querySelector('.js-subtotal-display');
-        var uid = v4_1.default();
-        _this.dataset.uid = uid;
-        console.log(uid);
         return _this;
     }
     CartComponent.prototype.connectedCallback = function () {

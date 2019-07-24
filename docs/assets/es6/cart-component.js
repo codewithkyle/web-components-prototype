@@ -1,11 +1,7 @@
-
 class CartComponent extends HTMLElement {
     constructor() {
         super();
         this._subtotalDisplay = this.querySelector('.js-subtotal-display');
-        const uid = uuid();
-        this.dataset.uid = uid;
-        console.log(uid);
     }
     connectedCallback() {
         console.log('Cart Connected');
