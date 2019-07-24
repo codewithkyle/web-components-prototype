@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+// import uuid from 'uuid/v4';
 
 class CartComponent extends HTMLElement
 {
