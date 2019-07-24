@@ -6,11 +6,10 @@
     "url": ""
   },
   "scripts": {
-    "compile": "npm-run-all compile:* && npm-run-all bundle:*",
+    "compile": "npm-run-all compile:* && npm run bundle",
     "compile:es5": "tsc --p ./tsconfig-es5.json",
     "compile:es6": "tsc --p ./tsconfig-es6.json",
-    "bundle": "npm-run-all bundle:*",
-    "bundle:es6": "node ./bundler.config.js",
+    "bundle": "node ./bundler.config.js",
     "preview": "http-server ./docs",
     "test": "npm run compile && npm run preview"
   },
@@ -28,5 +27,10 @@
     "@codewithkyle/notifyjs": "^0.1.0",
     "animejs": "^3.0.1",
     "uuid": "^3.3.2"
-  }
+  },
+  "webDependencies": [
+    "uuid/v4",
+    "animejs",
+    "@codewithkyle/notifyjs"
+  ]
 }
