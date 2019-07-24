@@ -2,6 +2,7 @@ const fs = require('fs');
 const glob = require("glob").Glob;
 const rollup = require('rollup');
 const rollupPluginNodeResolve = require('rollup-plugin-node-resolve');
+const rollupPluginCommonjs = require('rollup-plugin-commonjs');
 const rimraf = require('rimraf');
 
 function run()
@@ -125,8 +126,9 @@ function buildPackages(files)
             {
                 for (let k = 0; k < requireStatements.length; k++)
                     {
-                        let packageName = requireStatements[k].match(/(?<=[\"\'])(.*?)(?=[\"\'])/)[0];
-                        packageName = packageName.replace(/\@.*?\//, '');
+                        let fullPackageName = requireStatements[k].match(/(?<=[\"\'])(.*?)(?=[\"\'])/)[0];
+                        let packageName = fullPackageName.replace(/\@.*?\//, '');
+                        let filename  = packageName.replace(/.*\//, '');
 
                         let importName = requireStatements[k].match(/(?<=import).*(?=from)/)[0];
                         importName = importName.replace(/(\*\sas)/, '');
@@ -136,7 +138,7 @@ function buildPackages(files)
                         let data = requireStatements[k];
                         data += `\nconsole.log(${ importName })`;
 
-                        fs.writeFile(`./_bundles/${ packageName }.js`, data, (err)=>{
+                        fs.writeFile(`./_bundles/${ importName.toLowerCase() }.js`, data, (err)=>{
                             if(err)
                             {
                                 console.log(err);
@@ -144,16 +146,22 @@ function buildPackages(files)
                             }
 
                             const inputOptions = {
-                                input: `./_bundles/${ packageName }.js`,
+                                input: `./_bundles/${ importName }.js`,
                                 plugins: [
                                     rollupPluginNodeResolve({
-                                        extensions: [ '.mjs', '.cjs', '.js', '.json' ]
+                                        mainFields: ['browser', 'module', 'jsnext:main'],
+                                        extensions: [ '.mjs', '.js', '.json'],
+                                        browser: true
+                                    }),
+                                    rollupPluginCommonjs({
+                                        include: /node_modules/,
+                                        extensions: ['.cjs', '.js']
                                     })
                                 ]
                             };
                             const outputOptions = {
-                                file: `./docs/assets/packages/${ packageName }.js`,
-                                format: 'iife'
+                                file: `./docs/assets/packages/${ importName.toLowerCase() }.js`,
+                                format: 'cjs'
                             };
                             build(inputOptions, outputOptions);
                         });

@@ -1,7 +1,11 @@
+// import * as v4 from 'uuid/v4';
 class CartComponent extends HTMLElement {
     constructor() {
         super();
         this._subtotalDisplay = this.querySelector('.js-subtotal-display');
+        const uid = v4();
+        console.log(uid);
+        this.setAttribute('data-uid', uid);
     }
     connectedCallback() {
         console.log('Cart Connected');
