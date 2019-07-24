@@ -126,19 +126,33 @@ function buildPackages(files)
             {
                 for (let k = 0; k < requireStatements.length; k++)
                     {
+                        /**
+                         * Example:
+                         * fullPackageName = @codewithkyle/demo-package
+                         * namespace = codewithkyle
+                         * package = demo-package
+                         * filename = codewithkyle-demo-package
+                         */
                         let fullPackageName = requireStatements[k].match(/(?<=[\"\'])(.*?)(?=[\"\'])/)[0];
-                        let packageName = fullPackageName.replace(/\@.*?\//, '');
-                        let filename  = packageName.replace(/.*\//, '');
+                        let namespace = (fullPackageName.match(/.*[\/]/)) ? fullPackageName.match(/.*[\/]/)[0].replace(/[\/\@]/g, '') : '';
+                        let package = fullPackageName.replace(/(.*?\/)/, '');
+                        let filename  = `${ (namespace !== '') ? namespace + '-' : '' }${ package }`;
 
                         let importName = requireStatements[k].match(/(?<=import).*(?=from)/)[0];
                         importName = importName.replace(/(\*\sas)/, '');
                         importName = importName.replace(/[\{\}]/g, '');
                         importName = importName.replace(/[\s\t]/g, '');
 
-                        let data = requireStatements[k];
-                        data += `\nconsole.log(${ importName })`;
+                        fullPackageName = fullPackageName.toLowerCase();
+                        namespace = namespace.toLowerCase();
+                        package = package.toLowerCase();
+                        filename = filename.toLowerCase();
 
-                        fs.writeFile(`./_bundles/${ importName.toLowerCase() }.js`, data, (err)=>{
+                        /** File contents for the pre-bundled bundles */
+                        let data = requireStatements[k];
+                        data += `\nwindow.${ importName } = ${ importName };`;
+
+                        fs.writeFile(`./_bundles/${ filename }.js`, data, (err)=>{
                             if(err)
                             {
                                 console.log(err);
@@ -146,7 +160,7 @@ function buildPackages(files)
                             }
 
                             const inputOptions = {
-                                input: `./_bundles/${ importName }.js`,
+                                input: `./_bundles/${ filename }.js`,
                                 plugins: [
                                     rollupPluginNodeResolve({
                                         mainFields: ['browser', 'module', 'jsnext:main'],
@@ -160,8 +174,8 @@ function buildPackages(files)
                                 ]
                             };
                             const outputOptions = {
-                                file: `./docs/assets/packages/${ importName.toLowerCase() }.js`,
-                                format: 'cjs'
+                                file: `./docs/assets/packages/${ filename }.js`,
+                                format: 'iife'
                             };
                             build(inputOptions, outputOptions);
                         });
