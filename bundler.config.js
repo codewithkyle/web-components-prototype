@@ -119,7 +119,7 @@ function writeBundles(dependencies)
         
         for (let i = 0; i < dependencies.length; i++)
         {
-            let serverSafeName = dependencies[i].toLowerCase();
+            let serverSafeName = dependencies[i].package.toLowerCase();
             serverSafeName = serverSafeName.replace(/[\/]/g, '-');
             serverSafeName = serverSafeName.replace(/\@/g, '');
 
@@ -130,12 +130,26 @@ function writeBundles(dependencies)
              * package = demo-package
              * filename = codewithkyle-demo-package
              */
-            let fullPackageName = dependencies[i].toLowerCase();
+            let fullPackageName = dependencies[i].package.toLowerCase();
             let namespace = (fullPackageName.match(/.*[\/]/)) ? fullPackageName.match(/.*[\/]/)[0].replace(/[\/\@]/g, '') : '';
             let package = fullPackageName.replace(/(.*?\/)/, '');
 
-            let data = `import * as ${ package } from '${ fullPackageName }'\n`;
-            data += `\nwindow.${ package } = ${ package }.default;`;
+            /** Write pre-bundled bundle file */
+            let data = `import ${ dependencies[i].import } from '${ fullPackageName }'\n`;
+            if(dependencies[i].import.match(/(\*\sas)/))
+            {
+                let importName = dependencies[i].import;
+                importName = importName.replace(/([\*]\sas\s)/, '');
+                importName = importName.trim();
+                data += `\nwindow.${ importName } = ${ importName }.default;`;
+            }
+            else
+            {
+                let importName = dependencies[i].import;
+                importName = importName.replace(/[\{\}]/g, '');
+                importName = importName.trim();
+                data += `\nwindow.${ importName } = ${ importName };`;
+            }
             
             fs.writeFile(`./_bundles/${ serverSafeName }.js`, data, (err)=>{
                 if(err)

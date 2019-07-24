@@ -128,9 +128,9 @@
 
 	});
 
-	var Notify = unwrapExports(Notify_1);
+	unwrapExports(Notify_1);
 	var Notify_2 = Notify_1.Notify;
 
-	window.notifyjs = Notify;
+	window.Notify = Notify_2;
 
 }());
