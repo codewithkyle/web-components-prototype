@@ -24,6 +24,7 @@ var RemoveCartComponent = (function (_super) {
     RemoveCartComponent.prototype.removeCartComponent = function () {
         var cart = document.body.querySelector('cart-component');
         cart.remove();
+        new Notify({ message: "Removed cart with uid " + uuid() });
     };
     return RemoveCartComponent;
 }(HTMLElement));

@@ -9,6 +9,7 @@ class RemoveCartComponent extends HTMLElement {
     removeCartComponent() {
         const cart = document.body.querySelector('cart-component');
         cart.remove();
+        new Notify({ message: `Removed cart with uid ${uuid()}` });
     }
 }
 customElements.define('remove-cart-component', RemoveCartComponent);

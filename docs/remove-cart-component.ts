@@ -16,8 +16,7 @@ class RemoveCartComponent extends HTMLElement
     {
         const cart = document.body.querySelector('cart-component');
         cart.remove();
-        // new Notify({ message: 'Cart was removed successfully' });
-        // console.log(anime);
+        new Notify({ message: `Removed cart with uid ${ uuid() }` });
     }
 }
 

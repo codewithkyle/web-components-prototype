@@ -8,7 +8,7 @@
   "scripts": {
     "compile": "npm-run-all compile:* && npm run bundle",
     "compile:es5": "tsc --p ./tsconfig-es5.json",
-    "compile:es6": "tsc --p ./tsconfig-es6.json",
+    "compile:es6": "tsc --p ./tsconfig.json",
     "bundle": "node ./bundler.config.js",
     "preview": "http-server ./docs",
     "test": "npm run compile && npm run preview"
