@@ -1,14 +1,12 @@
-class Cart
+export class User
 {
     constructor()
     {
-        console.log('Cart constructor');
+        console.log('User constructor');
     }
 
-    public getLineItems() : void
+    public getUser() : void
     {
         console.warn('Line item fetch not yet implemented');
     }
 }
-
-new Cart();

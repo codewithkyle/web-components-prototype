@@ -16,17 +16,13 @@ var AddLineItemComponent = (function (_super) {
     function AddLineItemComponent() {
         var _this = _super.call(this) || this;
         _this.handleClick = _this.addLineItem.bind(_this);
-        _this._lineItemTemplate = document.body.querySelector('.js-line-item-template');
-        _this._cartComponent = document.body.querySelector('cart-component');
-        _this._lineItemsContainer = _this._cartComponent.querySelector('cart-line-items');
         return _this;
     }
     AddLineItemComponent.prototype.connectedCallback = function () {
         this.addEventListener('click', this.handleClick);
     };
     AddLineItemComponent.prototype.addLineItem = function () {
-        var node = document.importNode(this._lineItemTemplate.content, true);
-        this._lineItemsContainer.appendChild(node);
+        Cart.addLineItem();
     };
     return AddLineItemComponent;
 }(HTMLElement));

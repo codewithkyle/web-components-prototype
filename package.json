@@ -12,7 +12,7 @@
     "compile": "run-p compile:* && npm run bundle",
     "compile:es5": "tsc --p ./tsconfig-es5.json",
     "compile:es6": "tsc --p ./tsconfig.json",
-    "compile:modules": "tsc --p ./tsconfig-modules.json && node ./module.config.js",
+    "compile:modules": "tsc --p ./tsconfig-modules.json",
     "bundle": "node ./bundler.config.js",
     "preview": "http-server ./docs"
   },
