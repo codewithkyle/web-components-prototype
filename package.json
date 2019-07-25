@@ -6,13 +6,13 @@
     "url": ""
   },
   "scripts": {
-    "compile": "npm-run-all compile:* && npm run bundle",
+    "compile": "npm-run-all compile:*",
     "compile:es5": "tsc --p ./tsconfig-es5.json",
     "compile:es6": "tsc --p ./tsconfig.json",
     "compile:modules": "tsc --p ./tsconfig-modules.json && node ./module.config.js",
     "bundle": "node ./bundler.config.js",
     "preview": "http-server ./docs",
-    "test": "npm run compile && npm run preview"
+    "production": "npm run compile && npm run bundle"
   },
   "devDependencies": {
     "glob": "^7.1.4",
