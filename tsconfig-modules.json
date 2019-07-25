@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "outDir": "./docs/assets/es5",
+        "outDir": "./_modules",
         "sourceMap": false,
         "noImplicitAny": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "removeComments": true,
         "target": "es5",
-        "module": "commonjs",
+        "module": "none",
         "moduleResolution": "node",
         "allowJs": true,
         "checkJs": true,
@@ -22,9 +22,6 @@
         ]
     },
     "include": [
-        "./docs"
-    ],
-    "exclude": [
-        "./docs/assets"
+        "./web_modules"
     ]
 }

@@ -8,6 +8,8 @@
         "removeComments": true,
         "target": "es6",
         "module": "esnext",
+        "allowJs": true,
+        "checkJs": true,
         "lib": [
             "dom",
             "scripthost",
@@ -18,8 +20,10 @@
             "esnext"
         ]
     },
+    "include": [
+        "./docs"
+    ],
     "exclude": [
-        "./node_modules",
-        "./docs/assets",
+        "./docs/assets"
     ]
 }

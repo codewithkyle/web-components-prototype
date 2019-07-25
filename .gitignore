@@ -8,6 +8,10 @@ node_modules
 .sass-cache
 .DS_Store
 .stylelintcache
-_compiled
 .editorconfig
+
+# TypeScript Transpiled Outputs
+# -------
+_compiled
 _bundles
+_modules
