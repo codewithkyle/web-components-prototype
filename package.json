@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:es6": "npm run compile:es6",
-    "dev:modules": "npm run compile:modules",
+    "dev:modules": "npm run compile:modules && node ./modules.config.js",
     "compile": "run-p compile:* && npm run bundle",
     "compile:es5": "tsc --p ./tsconfig-es5.json",
     "compile:es6": "tsc --p ./tsconfig.json",
