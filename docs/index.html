@@ -326,18 +326,6 @@
             }
         }
     </style>
-
-    <!-- Required Commonjs Runtime Variables -->
-    <script>
-        var modules = {};
-        var module = {};
-        module.exports = function(module){ return module; };
-        var exports = {};
-        function require(value){
-            var packageName = value.replace(/\@.*?\//, '');
-            console.log(packageName);
-        }
-    </script>
 </head>
 <body>
     <script src="assets/polyfill/web-component.js" nomodule type="text/javascript"></script>
