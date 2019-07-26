@@ -13,7 +13,7 @@
     "compile:es5": "tsc --p ./tsconfig-es5.json",
     "compile:es6": "tsc --p ./tsconfig.json",
     "compile:modules": "tsc --p ./tsconfig-modules.json",
-    "bundle": "node ./bundler.config.js",
+    "bundle": "node ./bundler.config.js && node ./modules.config.js",
     "preview": "http-server ./docs"
   },
   "devDependencies": {

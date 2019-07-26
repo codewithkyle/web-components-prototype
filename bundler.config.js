@@ -3,6 +3,7 @@ const rollup = require('rollup');
 const rollupPluginNodeResolve = require('rollup-plugin-node-resolve');
 const rollupPluginCommonjs = require('rollup-plugin-commonjs');
 const rimraf = require('rimraf');
+const glob = require("glob").Glob;
 
 const package = require('./package.json');
 
@@ -98,15 +99,15 @@ function makePackageDirectory()
 
 function getWebDependencies()
 {
-    return new Promise((resolve, reject)=>{
+    return new Promise((resolve)=>{
+        let dependencies = [];
+
         if(package.webDependencies.length)
         {
-            resolve(package.webDependencies);
+            dependencies = package.webDependencies;
         }
-        else
-        {
-            reject('Nothing to bundle, check your package.json webDependencies array');
-        }
+        
+        resolve(dependencies);
     });
 }
 
@@ -169,34 +170,60 @@ function writeBundles(dependencies)
 
 function buildPackages(serverSafeBundleNames)
 {
-    for (let i = 0; i < serverSafeBundleNames.length; i++)
-    {
-        const inputOptions = {
-            input: `./_bundles/${ serverSafeBundleNames[i] }.js`,
-            plugins: [
-                rollupPluginNodeResolve({
-                    mainFields: ['browser', 'module', 'jsnext:main'],
-                    extensions: [ '.mjs', '.js', '.json'],
-                    browser: true
-                }),
-                rollupPluginCommonjs({
-                    include: /node_modules/,
-                    extensions: ['.cjs', '.js']
-                })
-            ]
-        };
-        const outputOptions = {
-            file: `./docs/assets/packages/${ serverSafeBundleNames[i] }.js`,
-            format: 'iife'
-        };
-        build(inputOptions, outputOptions);
-    }
+    const built = [];
+    return new Promise((resolve, reject)=>{
+        for (let i = 0; i < serverSafeBundleNames.length; i++)
+        {
+            const inputOptions = {
+                input: `./_bundles/${ serverSafeBundleNames[i] }.js`,
+                plugins: [
+                    rollupPluginNodeResolve({
+                        mainFields: ['browser', 'module', 'jsnext:main'],
+                        extensions: [ '.mjs', '.js', '.json'],
+                        browser: true
+                    }),
+                    rollupPluginCommonjs({
+                        include: /node_modules/,
+                        extensions: ['.cjs', '.js']
+                    })
+                ]
+            };
+            const outputOptions = {
+                file: `./docs/assets/packages/${ serverSafeBundleNames[i] }.js`,
+                format: 'iife'
+            };
+            build(inputOptions, outputOptions)
+            .then(()=>{
+                built.push(serverSafeBundleNames[i]);
+
+                if(built.length === serverSafeBundleNames.length)
+                {
+                    resolve();
+                }
+            })
+            .catch(err => {
+                reject(err);
+            });
+        }
+    });
 }
 
-async function build(inputOptions, outputOptions)
+function build(inputOptions, outputOptions)
 {
-    const bundle = await rollup.rollup(inputOptions);
-    await bundle.write(outputOptions);
+    return new Promise((resolve, reject)=>{
+        (async ()=>{
+            try
+            {
+                const bundle = await rollup.rollup(inputOptions);
+                await bundle.write(outputOptions); 
+                resolve();
+            }
+            catch (err)
+            {
+                reject(err)
+            }
+        })();
+    });
 }
 
 run();

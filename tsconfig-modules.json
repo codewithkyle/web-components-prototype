@@ -7,8 +7,8 @@
         "emitDecoratorMetadata": true,
         "removeComments": true,
         "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
+        "module": "none",
+        "moduleResolution": "classic",
         "allowJs": true,
         "checkJs": true,
         "lib": [
