@@ -139,7 +139,7 @@ function writeBundles(dependencies)
             if(dependencies[i].import.match(/(\*\sas)/))
             {
                 let importName = dependencies[i].import;
-                importName = importName.replace(/([\*]\sas\s)/, '');
+                importName = importName.replace(/(.*\sas\s)/, '');
                 importName = importName.trim();
                 data += `\nwindow.${ importName } = ${ importName }.default;`;
             }
