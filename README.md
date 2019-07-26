@@ -13,6 +13,8 @@ The purpose of this prototype is to experiment with what the current (July 2019)
 1. Provide a polyfill solution for IE 11 that limits the overhead applied to all other modern browsers
 1. Create an example utilizing the `<template>` element
 1. Demonstrate the ability to utilize NPM packages on the front-end
+1. Demonstrate how components communicate between one another
+1. Demonstrate how components communicate with web modules
 
 ## Additional Goals
 
