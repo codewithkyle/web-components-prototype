@@ -12,6 +12,12 @@ var Cart = (function () {
     Cart.prototype.addLineItem = function () {
         var node = document.importNode(this._lineItemTemplate.content, true);
         this._lineItemsContainer.appendChild(node);
+        var LineItemEvent = {
+            el: node,
+            time: performance.now()
+        };
+        var event = new CustomEvent('lineItemsAdded', { detail: LineItemEvent });
+        document.dispatchEvent(event);
     };
     return Cart;
 }());

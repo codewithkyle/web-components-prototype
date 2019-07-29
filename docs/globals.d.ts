@@ -7,3 +7,8 @@ declare class Cart{
     constructor();
     public static addLineItem() : void;
 }
+
+interface INewLineItemEvent{
+    el: HTMLElement|DocumentFragment|Node|Element;
+    time: number;
+}

@@ -21,5 +21,13 @@ class Cart
     {
         const node = document.importNode(this._lineItemTemplate.content, true);
         this._lineItemsContainer.appendChild(node);
+
+        const LineItemEvent = {
+            el: node,
+            time: performance.now()
+        }
+
+        const event = new CustomEvent('lineItemsAdded', { detail: LineItemEvent });
+        document.dispatchEvent(event);
     }
 }

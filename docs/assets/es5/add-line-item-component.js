@@ -16,6 +16,9 @@ var AddLineItemComponent = (function (_super) {
     function AddLineItemComponent() {
         var _this = _super.call(this) || this;
         _this.handleClick = _this.addLineItem.bind(_this);
+        document.addEventListener('lineItemsAdded', function (e) {
+            console.log(e);
+        });
         return _this;
     }
     AddLineItemComponent.prototype.connectedCallback = function () {
