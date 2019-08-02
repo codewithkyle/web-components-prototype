@@ -20,7 +20,7 @@ The purpose of this prototype is to experiment with what the current (July 2019)
 
 This prototype showcases several important use cases and confirms a few theories about how web components behave.
 
-### ELI5 Web Components
+### ELI5: Web Components
 
 
 We'll start with the `this` keyword's context when referring to web components. When a custom element is defined the `this` keyword refers to the class, however, since the class extends the `HTMLElement` printing the value of `this` will result in the DOM node being output in the console.
