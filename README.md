@@ -20,7 +20,7 @@ The purpose of this prototype is to experiment with what the current (July 2019)
 
 This prototype showcases several important use cases and confirms a few theories about how web components behave.
 
-#### ELI5 Web Components
+### ELI5 Web Components
 
 
 We'll start with the `this` keyword's context when referring to web components. When a custom element is defined the `this` keyword refers to the class, however, since the class extends the `HTMLElement` printing the value of `this` will result in the DOM node being output in the console.
@@ -276,7 +276,7 @@ Using web components means less treeshaking, less Webpack configuration headache
 
 Seams wonderful right? Well, it is, until you have to support IE 11. I'm not going to say it's not possible, but it does add a new level of complexity. Although the solution I'll explain is simple, it does extend your compile times since we'll be doing everything twice.
 
-#### Supporting Legacy Browsers
+### Supporting Legacy Browsers
 
 In the context of this section by legacy browsers I'll mostly be referring to IE 11.
 
