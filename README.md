@@ -308,4 +308,52 @@ That half the problem, now for how legacy browsers handle things.
 
 When a legacy browser sees the `type="module"` attribute instead of a `type="text/javascript"` they do nothing since they know it's not something they understand. However, the `nomodule` attribute means nothing to them, legacy browsers treat it like any other random attribute a developer could attach to an element and when it sees a type that it understands the script is parsed and then it runs.
 
-It's nice that we can double up our script tags and by using the new types and attributes we can avoid loading unnecessary scripts but what needs to happen to the JavaScript itself? 
+It's nice that we can double up our script tags and by using the new types and attributes we can avoid loading unnecessary scripts but what needs to happen to the JavaScript itself?
+
+Nothing, well, at least nothing that you have to do manually.
+
+We can continue to write code the way we want, using all the new features of modern ecmascirpt, we just have to compile and bundle everything, twice.
+
+How do we do this? With TypeScript. When running the TypeScript compiler we can actually tell the compiler what project it needs to use through the `--p <path to config>` flag. Our scripts section of the `package.json` file could look something like this:
+
+```json
+"scripts": {
+    "compile": "npm run compile:es5 && npm run compile:es6 && bundle:es5 && bundle:es6",
+    "compile:es5": "tsc --p ./tsconfig-es5.json",
+    "compile:es6": "tsc --p ./tsconfig.json",
+    "bundle:es5": "webpack cli config",
+    "bundle:es5": "webpack cli config"
+}
+```
+
+That's a heavy workload for node, but it's what must be done. You could break the scripts into different types such as adding a dev compile script that only runs the ES6 scripts but you'll figure out how to optimize later.
+
+What does our `tsconfig.json` look like? It's mostly the same between the two versions, I'll show the differences below.
+
+**tsconfig-es5.json**
+
+```json
+{
+    "compilerOptions": {
+        "outDir": "./_compiled/es5",
+        "target": "es5",
+        "module": "commonjs",
+    }
+}
+```
+
+**tsconfig.json**
+
+```json
+{
+    "compilerOptions": {
+        "outDir": "./_compiled/es6",
+        "target": "es6",
+        "module": "esnext",
+    }
+}
+```
+
+Those are the only changes that matter, it's basically just running the compiler twice where the output of the ES5 version of your code is bloated with the backwards compatibility changes.
+
+Now for the Webpack bundling process? Yeah, I'm not going to cover that here since it depends on what you're building. You can figure that out yourself.
