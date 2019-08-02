@@ -20,6 +20,9 @@ The purpose of this prototype is to experiment with what the current (July 2019)
 
 This prototype showcases several important use cases and confirms a few theories about how web components behave.
 
+#### ELI5 Web Components
+
+
 We'll start with the `this` keyword's context when referring to web components. When a custom element is defined the `this` keyword refers to the class, however, since the class extends the `HTMLElement` printing the value of `this` will result in the DOM node being output in the console.
 
 This is a key difference between the current way JavaScript was executed. Before, when creating a class that was paired with a node the developer had to find the node (or nodes) and instantiate the class. They then had to store a reference to the node within the class. In the example below a class gets the first instance of a card carousel element and stores the element. It then uses the stored element to query for all of the slide elements within the carousel.
@@ -203,7 +206,7 @@ setTimeout(function(){ document.body.querySelector('card-carousel').remove(); },
 
 In the example above we mount our card carousel class onto the card carousel element and after 5 seconds the node is removed from the DOM. The `disconnectedCallback()` method is fired when the node that the class instance is mounted to is removed.
 
-However, the power of web components doesn't end there. Besides removing the runtime overhead of tracking all the instances of all the classes and handling their removal web components also allows us to easily have components communicate between one another.
+However, the power of web components doesn't end there. Besides removing the runtime overhead of tracking all the instances of all the classes and handling their removal web components also allows us to easily have components communicate between one another. We'll start with the cart web components logic.
 
 ```javascript
 class CartComponent extends HTMLElement
@@ -234,6 +237,8 @@ class CartComponent extends HTMLElement
 customElements.define('cart-component', CartComponent);
 ```
 
+Now for the line item web component logic.
+
 ```javascript
 class LineItemComponent extends HTMLElement
 {
@@ -258,3 +263,17 @@ class LineItemComponent extends HTMLElement
 
 customElements.define('line-item-component', LineItemComponent);
 ```
+
+So, what does the code above actually do?
+
+When a line item is clicked the cart component is told to run it's `updateTotal()` method. It then loops through all of its line items and adds their totals to the overall subtotal of the cart.
+
+Great, now what does the code above actually mean?
+
+It means that since the instance of a class and the node in the DOM are the same thing we can use a query selector to get a reference to another component and call any public method or retrieve (and set) any public value. This cleans up any codebase, no longer would we have to track all the different nodes along with their paired classes. We don't have to import our Cart Component class into our Line Item Component class just to have access to the public methods or variables. It means tools like Webpack don't need to spend time figuring out where, why, and how a class is being used throughout a code base.
+
+Using web components means less treeshaking, less Webpack configuration headaches, and less overhead since everything works natively.
+
+Seams wonderful right? Well, it is, until you have to support IE 11. I'm not going to say it's not possible, but it does add a new level of complexity. Although the solution I'll explain is simple, it does extend your compile times since we'll be doing everything twice.
+
+#### Supporting Legacy Browsers
