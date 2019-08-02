@@ -277,3 +277,35 @@ Using web components means less treeshaking, less Webpack configuration headache
 Seams wonderful right? Well, it is, until you have to support IE 11. I'm not going to say it's not possible, but it does add a new level of complexity. Although the solution I'll explain is simple, it does extend your compile times since we'll be doing everything twice.
 
 #### Supporting Legacy Browsers
+
+In the context of this section by legacy browsers I'll mostly be referring to IE 11.
+
+As of time time of writing this (August 2nd, 2019) the polyfill used to support web components in legacy browsers breaks support in modern browsers (or at least the most recent build of Chrome Canary).
+
+That no bueno.
+
+So how do we fix this issue? We can't really break support for 98% of the internet just because some people don't want to (or can't) upgrade.
+
+ES Modules to the rescue.
+
+How do ES Modules work? Yeah, I'm not going cover that here so just [read up on them yourself](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/).
+
+The part of ES Modules that we care about is the `type="module"` and `nomodule` attributes. Let's break down how they work.
+
+```html
+<script type="module">
+    console.log('I run on modern browsers!');
+</script>
+
+<script nomodule type="text/javascript">
+    console.log('I run on legacy browsers but not new browsers!');
+</script>
+```
+
+Scripts can be typed as a "module". Since modern browsers know of ES Modules they'll run the script, however we couldn't break backwards compatibility so the `nomodule` attribute as created. Modern browsers know to ignore scripts when they have a `nomodule` attribute.
+
+That half the problem, now for how legacy browsers handle things.
+
+When a legacy browser sees the `type="module"` attribute instead of a `type="text/javascript"` they do nothing since they know it's not something they understand. However, the `nomodule` attribute means nothing to them, legacy browsers treat it like any other random attribute a developer could attach to an element and when it sees a type that it understands the script is parsed and then it runs.
+
+It's nice that we can double up our script tags and by using the new types and attributes we can avoid loading unnecessary scripts but what needs to happen to the JavaScript itself? 
